@@ -11,8 +11,7 @@
  *  amazonES: {
  *    region: 'us-east-1',
  *    accessKey: 'AKID',
- *    secretKey: 'secret',
- *    credentials: new AWS.EnvironmentCredentials('AWS') // Optional
+ *    secretKey: 'secret'
  *  }
  * });
  *
@@ -39,8 +38,6 @@ class HttpAmazonESConnector extends HttpConnector {
         }
         this.creds = AWS.config.credentials;
       });
-    } else if (c.credentials) {
-      this.creds = c.credentials;
     } else {
       this.creds = new AWS.Credentials(c.accessKey, c.secretKey);
     }
@@ -79,11 +76,7 @@ class HttpAmazonESConnector extends HttpConnector {
       }
     }, this);
 
-    var signAndSend = () => {
-      // Sign the request (Sigv4)
-      var signer = new AWS.Signers.V4(request, 'es');
-      signer.addAuthorization(this.creds, new Date());
-
+    var sendRequest = () => {
       var send = new AWS.NodeHttpClient();
       req = send.handleRequest(request, null, function (_incoming) {
         incoming = _incoming;
@@ -123,29 +116,26 @@ class HttpAmazonESConnector extends HttpConnector {
     request.headers['presigned-expires'] = false;
     request.headers['Host'] = this.endpoint.host;
 
+    // Sign the request (Sigv4)
+    var signer = new AWS.Signers.V4(request, 'es');
+
     if (this.amazonES.getCredentials && !this.creds) {
       const waitForCredentials = () => {
         setTimeout(() => {
           if (abort) {
            return;
           } else if (this.creds) {
-            signAndSend();
+            signer.addAuthorization(this.creds, new Date());
+            sendRequest();
           } else {
             waitForCredentials();
           }
         }, 100);
       };
       waitForCredentials();
-    } else if (this.creds.needsRefresh()) {
-      this.creds.refresh((err) =>{
-        if (err) {
-          cleanUp(err);
-        } else {
-          signAndSend();
-        }
-      });
     } else {
-      signAndSend();
+      signer.addAuthorization(this.creds, new Date());
+      sendRequest();
     }
 
     return function () {
