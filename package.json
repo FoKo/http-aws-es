@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "Use the elasticsearch-js client with Amazon ES",
   "repository": "https://github.com/TheDeveloper/http-aws-es",
   "bugs": "https://github.com/TheDeveloper/http-aws-es/issues",
