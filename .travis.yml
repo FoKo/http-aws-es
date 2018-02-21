@@ -5,6 +5,7 @@ node_js:
 deploy:
   provider: npm
   email: aws@foko.co
+  skip_cleanup: true
   api_key:
     secure: E+hdEdUHtDOuK8tgwe+hVxacpV81ySNiNEPj+bXnh6CYjsdK5IhVrA+Z2qb6cZKGRfIqE2Rj6yB+XW17cJRSRDgFsyFuI2MxDLrC9FZTVE2MEiQcWVGSbKSmmdbu3tFWZbM+8iEfKQt6JNZw5p8e/qxGzlF8FKG7H20ZA3H2AnI48q64A8uH+xx70XncECTo4i9oxDd5aQlxEP5UIsN08T1vnz0lR+Mu2cU9lPW8+ckPkA4Sd22Qz91PNuQtuzejNCbk7r++B5iMzt5imiw9M06Umav5gI1sklQ6BgM90DejK/cKT1BxYid1rolyEvqlEpEseLO177i+kLYpwLXqhWm05FcHhqt4sIRrf75GZFIxZINnPZzRyzQnJwmUNPQGHTZ8/mznnx+pJeVn1MdYor3ExPlRkAUiFlULEkJO3TXKoVh4R7F2v0YaDdUz2QndtdAjKo/MXpQ/P/bEXayYlf2n/t74NoUr0kM3afjDlwgzi7IQzO/dmeLrR5Pnfb0uLOyOx0xziss/+OLNpPIs064/Kvxsb5CQ9h6d+HrpW03NvlMkS5+Yg4g76pf8fhXDzeWpP8tdyM9YvwKenmmS1Jcbbqfl2klzsyq+4q4eRbkNUXiUBKHdocfOUE2IcJKwDidymPypYr3PUQ+0qrs78SHy9yV1ctLd6W8nzWkSfd0=
   on:
